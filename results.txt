@@ -1,0 +1,46 @@
+
+#include <stdio.h>
+#include <pthread.h>
+
+#define NUM_THREADS 2
+
+void* count_odd_even(void* arg) {
+    FILE *fp;
+        int num, count_odd = 0, count_even = 0;
+        int start = *(int*)arg;
+
+    fp = fopen("input.txt", "r");
+if (fp == NULL) {
+    printf("Error opening file\n");
+return NULL;
+}
+
+    for (int i = start; i < start + 50; i++) {
+    fscanf(fp, "%d", &num);
+if (num % 2 == 0)
+    count_even++;
+else
+    count_odd++;
+}
+
+fclose(fp);
+
+printf("Thread %d: Odd - %d, Even - %d\n", start/50 + 1, count_odd, count_even);
+
+return NULL;
+}
+
+int main() {
+    pthread_t threads[NUM_THREADS];
+    int thread_args[NUM_THREADS] = {0, 50};
+
+for (int i = 0; i < NUM_THREADS; i++) {
+    pthread_create(&threads[i], NULL, count_odd_even, &thread_args[i]);
+}
+
+for (int i = 0; i < NUM_THREADS; i++) {
+    pthread_join(threads[i], NULL);
+}
+
+return 0;
+}

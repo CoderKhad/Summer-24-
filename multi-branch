@@ -1,0 +1,26 @@
+#include <stdio.h>
+
+int main() {
+    double time, interest_rate;
+
+printf("Enter the time funds are left on deposit (in years): ");
+scanf("%lf", &time);
+
+if (time >= 5) {
+interest_rate = 0.0475;
+} else if (time >= 4) {
+interest_rate = 0.045;
+} else if (time >= 3) {
+interest_rate = 0.040;
+} else if (time >= 2) {
+interest_rate = 0.035;
+} else if (time >= 1) {
+interest_rate = 0.030;
+} else {
+interest_rate = 0.025;
+}
+
+printf("The interest rate is: %.4lf\n", interest_rate);
+
+    return 0;
+}
